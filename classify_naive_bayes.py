@@ -1,17 +1,19 @@
 #!/usr/bin/python3
 import json
+import math
 from generate_vocabulary import split_sentence
 
 def classify_sentence(sentence, naive_bayes_dict):
-    product = 1 / naive_bayes_dict["prior_ratio"]
+    sum = naive_bayes_dict["log_prior"]
 
     for word in sentence:
         if word not in naive_bayes_dict["positive_probabilities"]:
             continue
         
-        product *= naive_bayes_dict["positive_probabilities"][word] / naive_bayes_dict["negative_probabilities"][word]
+        # use log likelyhood
+        sum += math.log(naive_bayes_dict["positive_probabilities"][word] / naive_bayes_dict["negative_probabilities"][word])
 
-    if product >= 1:
+    if sum >= 0:
         return True
 
     return False
