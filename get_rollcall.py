@@ -48,6 +48,4 @@ def retrieve_rollcall(day, year):
         file.write(all_comments_json)
 
 if __name__ == "__main__":
-    day = 30
-    print(f"Retrieving day {day}...")
-    retrieve_rollcall(day, 2022)
+    retrieve_rollcall(argv[2], argv[1])
