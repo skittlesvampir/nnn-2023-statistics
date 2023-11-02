@@ -4,6 +4,7 @@ from sys import argv
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as pe
 
 from generate_vocabulary import split_sentence
 from classify_naive_bayes import classify_sentence, get_error_margins_for_out
@@ -33,17 +34,35 @@ if __name__ == "__main__":
     (lower_error_margin, upper_error_margin) = get_error_margins_for_out()
 
     days = []
+    yerr = [
+        [],
+        []
+    ]
 
     for day in range(1,day+1):
-        days.append(get_outs_at_day(year, day))
+        outs = get_outs_at_day(year, day)
+        days.append(outs)
+        yerr[0].append(outs * (lower_error_margin))
+        yerr[1].append(outs * (upper_error_margin))
 
     labels = range(1,day+1)
-    # days = [158, 79, 91, 123, 134, 143, 135, 181, 159, 143, 125, 130, 137, 115, 112, 84, 75, 69, 62, 57, 48, 45, 35, 27, 23, 24, 29, 23, 31, 94]
+
+    plt.rcParams["font.family"] = "Carlito"
+    plt.rcParams["font.size"] = 14
 
     f = plt.figure()
     f.set_figwidth(15)
+    f.set_figheight(8)
+    plt.margins(x=0.01, y=0.1)
 
-    plt.bar(labels, days)
+
+    ax = plt.bar(labels, days, path_effects=[pe.Stroke(linewidth=1, foreground="black")], color="#95d0fc")
+    plt.errorbar(labels, days, yerr=yerr, capsize=3, fmt="none", ecolor="firebrick")
     plt.xticks(np.arange(1, day+1, 1.0))
-    plt.show()
+
+    plt.xlabel("Day")
+    plt.ylabel("Number of people")
+    plt.title(f"How many people admitted they were out (2022)")
+    
+    plt.savefig("graphs/2023-outs.jpeg", dpi=300)
 

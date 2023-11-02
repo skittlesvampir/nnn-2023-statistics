@@ -22,7 +22,7 @@ def test_against_labeled_dataset(test=[True, False]):
     with open("naive_bayes.json", "r") as naive_bayes_file:
         naive_bayes_dict = json.loads(naive_bayes_file.read())
 
-    with open("labeled_comments.json", "r") as labeled_file:
+    with open("testset.json", "r") as labeled_file:
         labeled_comments = json.loads(labeled_file.read())
 
     total = 0
