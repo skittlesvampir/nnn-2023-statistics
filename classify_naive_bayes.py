@@ -11,7 +11,7 @@ def classify_sentence(sentence, naive_bayes_dict):
             continue
         
         # use log likelyhood
-        sum += math.log(naive_bayes_dict["positive_probabilities"][word] / naive_bayes_dict["negative_probabilities"][word])
+        sum += naive_bayes_dict["lambda"][word]
 
     if sum >= 0:
         return True
@@ -40,6 +40,16 @@ def test_against_labeled_dataset(test=[True, False]):
             correct += 1
 
     return correct / total
+
+# get the upper and lower error margins for comments that say "i'm out"
+def get_error_margins_for_out():
+    positives_correct = test_against_labeled_dataset([True])
+    positives_false = 1 - positives_correct # comments that were labeled as "in" but are actually "out" (upper bound)
+
+    negatives_correct = test_against_labeled_dataset([False])
+    negatives_false = 1 - negatives_correct # comments that were labeled as "out" but are actualyl "in" (lower bound)
+
+    return (negatives_false, positives_false)
     
 
 if __name__ == "__main__":

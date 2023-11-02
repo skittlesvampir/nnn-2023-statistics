@@ -18,10 +18,8 @@ def retrieve_rollcall(day, year):
     date_min = int(datetime.datetime(year, 11, day, 0, 0).strftime("%s"))
     date_max = int(datetime.datetime(year, 11, day, 23, 59).strftime("%s"))
 
-    if year == 2022:
+    if year == 2022 or year == 2023:
         flair_name = "\"🗳️ Official Roll-Call\""
-    elif year == 2023:
-        pass # can be done as soon as first roll call was published
 
     for submission in subreddit.search(f"flair_name: {flair_name}", sort="new"):
         if date_min <= submission.created_utc <= date_max:
@@ -48,4 +46,4 @@ def retrieve_rollcall(day, year):
         file.write(all_comments_json)
 
 if __name__ == "__main__":
-    retrieve_rollcall(argv[2], argv[1])
+    retrieve_rollcall(int(argv[2]), int(argv[1]))
