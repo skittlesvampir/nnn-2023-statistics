@@ -29,7 +29,7 @@ def get_outs_at_day(year, day):
 
 if __name__ == "__main__":
     year = int(argv[1])
-    day = int(argv[2])
+    num_days = int(argv[2])
     
     (lower_error_margin, upper_error_margin) = get_error_margins_for_out()
 
@@ -39,13 +39,13 @@ if __name__ == "__main__":
         []
     ]
 
-    for day in range(1,day+1):
+    for day in range(1,num_days+1):
         outs = get_outs_at_day(year, day)
         days.append(outs)
         yerr[0].append(outs * (lower_error_margin))
         yerr[1].append(outs * (upper_error_margin))
-
-    labels = range(1,day+1)
+            
+    labels = range(1,num_days+1)
 
     plt.rcParams["font.family"] = "Carlito"
     plt.rcParams["font.size"] = 14
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     ax = plt.bar(labels, days, path_effects=[pe.Stroke(linewidth=1, foreground="black")], color="#95d0fc")
     plt.errorbar(labels, days, yerr=yerr, capsize=3, fmt="none", ecolor="firebrick")
-    plt.xticks(np.arange(1, day+1, 1.0))
+    plt.xticks(np.arange(1, 31, 1.0))
 
     plt.xlabel("Day")
     plt.ylabel("Number of people")
