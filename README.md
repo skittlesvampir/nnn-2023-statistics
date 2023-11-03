@@ -24,7 +24,7 @@ A benchmark of the dataset can be generated with:
 
 The current benchmark is:
 ```
-The classifier is 97.54% correct for "in".
-The classifier is 100.00% correct for "out".
-The classifier is 97.57% correct in total.
+The classifier is 99.78% correct for "in".
+The classifier is 94.29% correct for "out".
+The classifier is 99.72% correct in total.
 ```
